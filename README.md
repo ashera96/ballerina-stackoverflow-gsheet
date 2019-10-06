@@ -21,6 +21,8 @@ To understand how you can use Ballerina API connectors, in this sample we use St
 
 You can retrieve what ever details you like from a stack exchange account (question details are retrieved in this scenario), then use the Ballerina Google Spreadsheet connector and store that data to a spreadsheet.
 
+In order to try something other than questions you can check out the [stackexchange docs](https://api.stackexchange.com/docs/).
+
 ## Compatibility
 
 | Ballerina Language Version  | Stack Exchange API Version | Google Spreadsheet API Version |
@@ -48,7 +50,7 @@ $ git clone https://github.com/ashera96/ballerina-stackoverflow-gsheet.git
 ```
 
 **Configurations**
-- Go through the following steps to obtain credetials and tokens for Google Sheets API.
+- Go through the following steps to obtain credentials and tokens for Google Sheets API.
     1. Visit [Google API Console](https://console.developers.google.com), click **Create Project**, and follow the wizard 
     to create a new project.
     2. Enable both GMail and Google Sheets APIs for the project.
