@@ -1,11 +1,6 @@
 # Ballerina-Stackoverflow-Spreadsheet Integration
 
 This is a ballerina project to integrate stackoverflow and google sheets
-<!-- 
-Stack Exchange API Version V2.2 is used in this project to retrieve questions and its related data of a given user using a GET request through Ballerina. 
-
-The Google Spreadsheet endpoint allows you to access the Google Spreadsheet API Version v4 through Ballerina. This project stores the retrieved stackoverflow data in a spreadsheet.
- -->
 
 > This guide walks you through the process of running this repo which use Stackoverflow and Google Sheets along with Ballerina language.
 
