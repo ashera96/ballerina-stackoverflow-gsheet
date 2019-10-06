@@ -70,6 +70,8 @@ $ git clone https://github.com/ashera96/ballerina-stackoverflow-gsheet.git
 
 - Create a Google Sheet as follows from the same Google account you have obtained the client credentials and tokens.
 
+![Image of the created spreadsheet](./spreadsheet1.png?raw=true "Optional Title")
+
 
 - Obtain the spreadsheet id by extracting the value between the "/d/" and the "/edit" in the URL of your spreadsheet.
 
@@ -103,3 +105,7 @@ as follows.
 ```bash
 $ ballerina run target/bin/stackoverflow_gsheet.jar
 ```
+
+If the above mentioned instructions were properly followed the retrieved details should be added to the spreadsheet as shown below.
+
+![Image of the spreadsheet with the retrieved data](./spreadsheet2.png?raw=true "Optional Title")
