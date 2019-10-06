@@ -53,7 +53,7 @@ $ git clone https://github.com/ashera96/ballerina-stackoverflow-gsheet.git
 - Go through the following steps to obtain credentials and tokens for Google Sheets API.
     1. Visit [Google API Console](https://console.developers.google.com), click **Create Project**, and follow the wizard 
     to create a new project.
-    2. Enable both GMail and Google Sheets APIs for the project.
+    2. Enable the Google Sheets APIs for the project.
     3. Go to **Credentials -> OAuth consent screen**, enter a product name to be shown to users, and click **Save**.
     4. On the **Credentials** tab, click **Create credentials** and select **OAuth client ID**. 
     5. Select an application type, enter a name for the application, and specify a redirect URI 
@@ -67,7 +67,7 @@ $ git clone https://github.com/ashera96/ballerina-stackoverflow-gsheet.git
     token and access token. 
 
 
-- Go through the following steps to obtain credetials for Stack Exchange API.
+- Go through the following steps to obtain credentials for Stack Exchange API.
     1. Get your stackoverflow user id      
 
 - Create a Google Sheet as follows from the same Google account you have obtained the client credentials and tokens.
