@@ -21,10 +21,13 @@ string spreadsheetId = config:getAsString("SPREADSHEET_ID");
 # Sheet name of the reference googlle sheet.
 string sheetName = config:getAsString("SHEET_NAME");
 
+# URL of the stackoverflow account.
+string stackoverflowId = config:getAsString("STACKOVERFLOW_ID");
+
 # Variable to store the top left cell.
 string topCell = "A2";
 
-# Variable to store the bottom right cell. 
+# Variable to store the bottom right cell (leave empty to self adjust based on the number of elements). 
 string bottomCell = "";
 
 # Google Sheets client endpoint declaration.
@@ -48,8 +51,11 @@ http:Client stackoverflowClient = new("http://api.stackexchange.com/2.2");
 public function main(string... args) {
     var response = spreadsheetClient->openSpreadsheetById(spreadsheetId);
     if (response is gsheets4:Spreadsheet) {
-        io:println("Spreadsheet Details: ", response);
+        io:println("\n----------------------------------------------------------------------------------------------------------------");
+        io:println("| Stackoverflow-Spreadsheet Integration -> Adding asked questions along with few more details to a spreadsheet |");
+        io:println("----------------------------------------------------------------------------------------------------------------\n");
         getStackoverflowData();
+        io:println("\n-----------------------------------------------------------------------------------------------------------------\n");
     } else {
         io:println("Error: ", response);
     }
@@ -61,7 +67,8 @@ public function getStackoverflowData() {
     string[][] values = [];
     var count = 0;
 
-    var response = stackoverflowClient->get("/users/7871852/questions?order=desc&sort=activity&site=stackoverflow");
+    var response = stackoverflowClient->get("/users/" + stackoverflowId + "/questions?order=desc&sort=activity&site=stackoverflow");
+    
     if (response is http:Response) {
         var msg = response.getJsonPayload();
         if (msg is json) {
@@ -75,7 +82,8 @@ public function getStackoverflowData() {
                 values[count] = [title, link, view_count, answer_count, score];
                 count = count + 1;
             }
-            setSpreadsheetValues(values);
+            io:println("Successfully retrieved the stackoverflow data");
+            setSpreadsheetValues(values); // Method to add the retrieved data to the spreadsheet
         } else {
             io:println("Invalid payload received:" , msg.reason());
         }
@@ -89,6 +97,7 @@ public function setSpreadsheetValues(string[][] values) {
     var response = spreadsheetClient->setSheetValues(spreadsheetId, sheetName, values, topCell, bottomCell);
     if (response is boolean) {
         io:println("Status : ", response);
+        io:println("Successfully added the data to the spreadsheet");
     } else {
         io:println("Error: ", response);
     }
