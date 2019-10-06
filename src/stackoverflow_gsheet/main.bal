@@ -21,10 +21,13 @@ string spreadsheetId = config:getAsString("SPREADSHEET_ID");
 # Sheet name of the reference googlle sheet.
 string sheetName = config:getAsString("SHEET_NAME");
 
+# URL of the stackoverflow account.
+string stackoverflowId = config:getAsString("STACKOVERFLOW_URL");
+
 # Variable to store the top left cell.
 string topCell = "A2";
 
-# Variable to store the bottom right cell. 
+# Variable to store the bottom right cell (leave empty to self adjust based on the number of elements). 
 string bottomCell = "";
 
 # Google Sheets client endpoint declaration.
@@ -61,7 +64,7 @@ public function getStackoverflowData() {
     string[][] values = [];
     var count = 0;
 
-    var response = stackoverflowClient->get("/users/7871852/questions?order=desc&sort=activity&site=stackoverflow");
+    var response = stackoverflowClient->get("/users/" + stackoverflowId + "/questions?order=desc&sort=activity&site=stackoverflow");
     if (response is http:Response) {
         var msg = response.getJsonPayload();
         if (msg is json) {
