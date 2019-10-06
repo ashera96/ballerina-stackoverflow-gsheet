@@ -21,9 +21,11 @@ string spreadsheetId = config:getAsString("SPREADSHEET_ID");
 # Sheet name of the reference googlle sheet.
 string sheetName = config:getAsString("SHEET_NAME");
 
-string[][] values = [["1", "2", "3"],["4","5","6"]];
-string topCell = "B5";
-string bottomCell = "D6";
+# Variable to store the top left cell.
+string topCell = "A2";
+
+# Variable to store the bottom right cell. 
+string bottomCell = "";
 
 # Google Sheets client endpoint declaration.
 gsheets4:SpreadsheetConfiguration spreadsheetConfig = {
@@ -47,8 +49,7 @@ public function main(string... args) {
     var response = spreadsheetClient->openSpreadsheetById(spreadsheetId);
     if (response is gsheets4:Spreadsheet) {
         io:println("Spreadsheet Details: ", response);
-        var stackoverflow_response = getStackoverflowData();
-        setSpreadsheetValues();
+        getStackoverflowData();
     } else {
         io:println("Error: ", response);
     }
@@ -56,6 +57,10 @@ public function main(string... args) {
 
 # Function to retrieve data from stackoverflow.
 public function getStackoverflowData() {
+    // 2D array to store the retrieved data.
+    string[][] values = [];
+    var count = 0;
+
     var response = stackoverflowClient->get("/users/7871852/questions?order=desc&sort=activity&site=stackoverflow");
     if (response is http:Response) {
         var msg = response.getJsonPayload();
@@ -67,7 +72,10 @@ public function getStackoverflowData() {
                 string view_count = temp.view_count.toString();
                 string answer_count =  temp.answer_count.toString();
                 string score = temp.score.toString();
+                values[count] = [title, link, view_count, answer_count, score];
+                count = count + 1;
             }
+            setSpreadsheetValues(values);
         } else {
             io:println("Invalid payload received:" , msg.reason());
         }
@@ -77,7 +85,7 @@ public function getStackoverflowData() {
 }
 
 # Function to set collected data to the spreadsheet.
-public function setSpreadsheetValues() {
+public function setSpreadsheetValues(string[][] values) {
     var response = spreadsheetClient->setSheetValues(spreadsheetId, sheetName, values, topCell, bottomCell);
     if (response is boolean) {
         io:println("Status : ", response);
